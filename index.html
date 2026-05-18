@@ -1,49 +1,391 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Архитектура Барнаула | Главная</title>
-     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            color: #2c3e50;
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Roboto', sans-serif;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            border-bottom: 3px solid #ffd166;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        nav a:hover {
+            background: #ffd166;
+            color: #1a472a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a.active {
+            background: #ffd166;
+            color: #1a472a;
+        }
+
+        #theme-toggle {
+            background: #ffd166;
+            color: #1a472a;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        #theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #1a472a;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #ffd166;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: #2d6a4f;
+            margin: 1.5rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        strong {
+            color: #e76f51;
+            font-weight: 700;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin: 0.7rem 0;
+            font-size: 1.05rem;
+        }
+
+        li::marker {
+            color: #ffd166;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 100%);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            font-size: 0.95rem;
+            border-top: 3px solid #ffd166;
+        }
+
+        footer p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffd166;
+            color: #1a472a;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+
+        .go-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .go-top:hover {
+            background: #e6c200;
+            transform: translateY(-3px);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::selection {
+            background: #ffd166;
+            color: #1a472a;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+            header h1 { font-size: 1.4rem; }
+            nav ul { flex-direction: column; gap: 0.7rem; }
+            nav a { display: block; }
+            main { padding: 0 1rem; }
+            section { padding: 1.5rem; }
+            h2 { font-size: 1.6rem; }
+            .go-top { width: 40px; height: 40px; font-size: 20px; bottom: 20px; right: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.2rem; }
+            section { padding: 1.2rem; }
+            h2 { font-size: 1.4rem; }
+            p, li { font-size: 0.95rem; }
+        }
+
+        [data-theme="dark"] body {
+            background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
+            color: #e8e8ed;
+        }
+
+        [data-theme="dark"] section {
+            background: #1e1e2e;
+            border-color: #333344;
+        }
+
+        [data-theme="dark"] header, [data-theme="dark"] footer {
+            background: linear-gradient(135deg, #0d2818 0%, #1a472a 100%);
+        }
+
+        [data-theme="dark"] h2, [data-theme="dark"] h3 {
+            color: #ffd166;
+        }
+    </style>
 </head>
 <body>
     <header>
-    <h1>Архитектура Барнаула</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">Главная</a></li>
-            <li><a href="epochs.html">Эпохи</a></li>
-            <li><a href="routes.html">Маршруты</a></li>
-        </ul>
-    </nav>
-</header>
-<main>
-    <section>
-        <h2>Купеческий Барнаул — время особняков, доходных и торговых рядов</h2>
-        <p>Временной промежуток:XVIII–XIX века</p>
-        <p>В этот исторический период Барнаул активно развивался как торговый центр, что отразилось в характерной архитектуре города. Основными элементами застройки стали:</p>
-        <ul>
-            <li>Особняки купеческого сословия</li>
-            <li>Доходные дома для сдачи в аренду</li>
-            <li>Торговые ряды для коммерческой деятельности</li>
-        </ul>
-        <img src="/run/media/user/4424C3F624C3E8CE/Сангинова_УП 01  1/sources/images/60e2b833184311f1ac32ee1cf8afc2a3_1">
-    </section>
-    <section>
-        <h3>Архитектурные особенности</h3>
-        <p>Стиль застройки определяется классицизмом с характерными элементами:</p>
-        <ul>
-            <li>Колонны на фасадах зданий</li>
-            <li>Декоративная лепнина</li>
-            <li>Арочные оконные проемы</li>
-            <li>Просторные внутренние дворы</li>
-        </ul>
-        <img src="/run/media/user/4424C3F624C3E8CE/Сангинова_УП 01  1/sources/images/images.jpeg">
-    </section>
-</main>
-<footer>
-    <p>&copy; Сангинова Н.У., 2026</p>
-</footer>
-<script src="js/script.js"></script>
+        <h1>Архитектура Барнаула</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Главная</a></li>
+                <li><a href="epochs.html">Эпохи</a></li>
+                <li><a href="routes.html">Маршруты</a></li>
+            </ul>
+        </nav>
+        <button id="theme-toggle">🌙 Тёмная тема</button>
+    </header>
+
+    <main>
+        <section>
+            <h2>Купеческий Барнаул — время особняков, доходных и торговых рядов</h2>
+            <p><strong>Временной промежуток:</strong> XVIII–XIX века</p>
+            <p>В этот исторический период Барнаул активно развивался как торговый центр, что отразилось в характерной архитектуре города. Основными элементами застройки стали:</p>
+            <ul>
+                <li>Особняки купеческого сословия</li>
+                <li>Доходные дома для сдачи в аренду</li>
+                <li>Торговые ряды для коммерческой деятельности</li>
+            </ul>
+            <img src="/run/media/user/4424C3F624C3E8CE/Сангинова_УП 01  1/sources/images/60e2b833184311f1ac32ee1cf8afc2a3_1">
+        </section>
+
+        <section>
+            <h3>Архитектурные особенности</h3>
+            <p>Стиль застройки определяется классицизмом с характерными элементами:</p>
+            <ul>
+                <li>Колонны на фасадах зданий</li>
+                <li>Декоративная лепнина</li>
+                <li>Арочные оконные проемы</li>
+                <li>Просторные внутренние дворы</li>
+            </ul>
+            <img src="/run/media/user/4424C3F624C3E8CE/Сангинова_УП 01  1/sources/images/images.jpeg">
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Сангинова Н.У., 2026</p>
+    </footer>
+
+    <a href="#" class="go-top" aria-label="Наверх">↑</a>
+
+    <script>
+        // ========== ПЕРЕКЛЮЧЕНИЕ ТЕМЫ ==========
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const rootElement = document.documentElement;
+
+        function updateButtonLabel(theme) {
+            if (themeToggleBtn) {
+                themeToggleBtn.textContent = theme === 'dark' ? '☀️ Светлая тема' : '🌙 Тёмная тема';
+            }
+        }
+
+        function applyTheme(theme) {
+            rootElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            updateButtonLabel(theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else {
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(systemPrefersDark ? 'dark' : 'light');
+        }
+
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = rootElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
+        }
+
+        // ========== АНИМАЦИЯ КАРТОЧЕК ==========
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => observer.observe(section));
+
+        setTimeout(() => {
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top < window.innerHeight - 100) {
+                    section.classList.add('visible');
+                }
+            });
+        }, 100);
+
+        // ========== КНОПКА НАВЕРХ ==========
+        const goTopBtn = document.querySelector('.go-top');
+        if (goTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    goTopBtn.classList.add('show');
+                } else {
+                    goTopBtn.classList.remove('show');
+                }
+            });
+            goTopBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // ========== ПОДСВЕТКА АКТИВНОЙ СТРАНИЦЫ ==========
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+
+        // ========== ПЛАВНОЕ ПОЯВЛЕНИЕ ==========
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.5s ease';
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+
+        console.log('Главная страница загружена');
+    </script>
 </body>
-</html>        
+</html>
