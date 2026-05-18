@@ -1,0 +1,131 @@
+ css/styles.css - все стили сайта 
+ {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    color: #2c3e50;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.7;
+}
+
+header {
+    background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 3px solid #ffd166;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+nav a:hover {
+    background: #ffd166;
+    color: #1a472a;
+}
+
+#theme-toggle {
+    background: #ffd166;
+    color: #1a472a;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+section {
+    background: white;
+    border-radius: 28px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 2rem;
+    color: #1a472a;
+    border-bottom: 3px solid #ffd166;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+footer {
+    background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 100%);
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+}
+
+.go-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #ffd166;
+    color: #1a472a;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+    nav ul {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    main {
+        padding: 0 1rem;
+    }
+    section {
+        padding: 1.5rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+[data-theme="dark"] body {
+    background: #121212;
+    color: #e8e8ed;
+}
+
+[data-theme="dark"] section {
+    background: #1e1e2e;
+}
